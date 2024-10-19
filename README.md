@@ -5,3 +5,5 @@ Tool_Normalisation.py was used to determine all the individual integrals found i
 Tool_MonteCarlo.py was used to generate the pseudodata.
 
 Tool_Fitting was used to fit the pseudodata and extract the estimated values, uncertanties and covariance matrix.
+
+The AmplitudeV2 directory contains the alternative forms of the amplitudes
