@@ -6,4 +6,11 @@ Tool_MonteCarlo.py was used to generate the pseudodata.
 
 Tool_Fitting was used to fit the pseudodata and extract the estimated values, uncertanties and covariance matrix.
 
-The AmplitudeV2 directory contains the alternative forms of the amplitudes
+The AmplitudeV2 directory contains the same amplitudes but in an alternative forms of the (starting from another differently orientated rest frame). The end result is still the same.
+
+Main references:
+Helicity amplitudes for generic multi-body particle decays featuring multiple decay chains: [https://arxiv.org/abs/1911.10025](https://arxiv.org/abs/2208.03262)
+
+Extracting maximum information from polarised baryon decays via amplitude analysis: the Λ+c→pK−π+ case: [https://arxiv.org/abs/2208.03262](https://arxiv.org/abs/2004.12318)
+
+Amplitude analysis of the Λ+c→pK−π+ decay and Λ+c baryon polarization measurement in semileptonic beauty hadron decays: [https://arxiv.org/abs/2208.03262](https://arxiv.org/abs/2208.03262)
