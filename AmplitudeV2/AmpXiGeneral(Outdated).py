@@ -1,6 +1,6 @@
 #Roman Sultanov
 #Imports
-from Form import *
+from KinematicsGeneral(Outdated) import *
 
 #-----------------------------------------------------------------------------------------------------------------------
 #Data (GeV)
