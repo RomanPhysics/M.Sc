@@ -4,6 +4,8 @@ Tool_MonteCarlo.py was used to generate the pseudodata.
 
 Tool_Fitting was used to fit the pseudodata and extract the estimated values, uncertanties and covariance matrix.
 
+Tool_Plotting was used to plot the Dalitz plots and the 1D projections of the phase-space variables.
+
 Tool_Normalisation.py was used to determine all the individual integrals found in Eq. (127) in the thesis.
 
 The AmplitudesGeneral directory contains the same amplitudes but in an alternative forms (starting from differently orientated rest frame). Outdated optimization
