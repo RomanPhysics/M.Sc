@@ -1,12 +1,12 @@
-Here are the python scripts that were used for the analysis in the master's thesis, alongside plots of the results. AMPL.py and AMPX.py contains the amplitude for charm Λ and Ξ baryon respectively, both of which are built on additional formulas found in Kinematics.py.
-
-Tool_Normalisation.py was used to determine all the individual integrals found in Eq. (127) in the thesis.
+Here are the python scripts that were used for the analysis in the master's thesis, alongside plots of the results. AmpLambda.py and AmpXi.py contains the amplitude for charm Λ and Ξ baryon respectively, both of which are built on additional formulas found in Kinematics.py.
 
 Tool_MonteCarlo.py was used to generate the pseudodata.
 
 Tool_Fitting was used to fit the pseudodata and extract the estimated values, uncertanties and covariance matrix.
 
-The AmplitudeV2 directory contains the same amplitudes but in an alternative forms of the (starting from another differently orientated rest frame). The end result is still the same.
+Tool_Normalisation.py was used to determine all the individual integrals found in Eq. (127) in the thesis.
+
+The AmplitudesGeneral directory contains the same amplitudes but in an alternative forms (starting from differently orientated rest frame). Outdated optimization
 
 Main references:
 
