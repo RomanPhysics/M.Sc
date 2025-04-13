@@ -1,13 +1,14 @@
 #Roman Sultanov
 #Imports
-from AmpLambda import *
-#from AmpXi import *
+from PDFLambda import *
+#from PDFXi import *
 Px, Py, Pz = 0.0, 0.0, 0.95
 HRpr, HRpi, HRmr, HRmi, HSpr, HSpi, HSmr, HSmi, HUpmr, HUpmi, HUmpr, HUmpi, HUm0r, HUm0i \
     =0.29, 0.04, -0.16, 1.5, -6.8, 3.1, -13, 4.5, 1.19, -1.03, -3.1, -3.3, -0.7, -4.2
 
 from numba import set_num_threads
 set_num_threads(6)
+import pandas as pd
 
 #-----------------------------------------------------------------------------------------------------------------------
 import csv
