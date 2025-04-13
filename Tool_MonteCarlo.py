@@ -1,7 +1,7 @@
 #Roman Sultanov
 #Imports
-from AmpLambda import *
-#from AmpXi import *
+from PDFLambda import *
+#from PDFXi import *
 Px, Py, Pz = 0.0, 0.0, 0.95
 HRpr, HRpi, HRmr, HRmi, HSpr, HSpi, HSmr, HSmi, HUp0r, HUp0i, HUpmr, HUpmi, HUmpr, HUmpi, HUm0r, HUm0i \
     =0.29, 0.04, -0.16, 1.5, -6.8, 3.1, -13, 4.5, 1.0, 0.0, 1.19, -1.03, -3.1, -3.3, -0.7, -4.2
@@ -27,11 +27,11 @@ def generate(num_samples):
 
         pdf = PDF(m2pK, m2Kπ, cos_theta_p, phi_p, chi, Px, Py, Pz, HRpr, HRpi, HRmr, HRmi, HSpr, HSpi, HSmr, HSmi, HUp0r, HUp0i, HUpmr, HUpmi, HUmpr, HUmpi, HUm0r, HUm0i)
         
-        ymax=0.082
+        ymax = 0.082
         y = np.random.uniform(0.0, ymax)
-        if pdf >0.082:
-            print(f'Hyperbox does not enclose PDF. Current ceiling {ymax}, PDF exceeded with {pdf}')
-            print([m2pK, m2Kπ, cos_theta_p, phi_p, chi])
+        if pdf > 0.082:
+            #print([m2pK, m2Kπ, cos_theta_p, phi_p, chi])
+            print(pdf)
         if y < pdf:
             samples.append([m2pK, m2Kπ, cos_theta_p, phi_p, chi])
     return np.array(samples)
