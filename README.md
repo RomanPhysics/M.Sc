@@ -1,3 +1,5 @@
+OUTDATED, NEEDS UPDATE!
+
 Here are the python scripts that were used for the analysis in the master's thesis [https://uu.diva-portal.org/smash/get/diva2:1912343/FULLTEXT01.pdf](https://uu.diva-portal.org/smash/get/diva2:1912343/FULLTEXT01.pdf), alongside plots of the results. AmpLambda.py and AmpXi.py contains the amplitude for charm Λ and Ξ baryon respectively, both of which are built on additional formulas found in Kinematics.py.
 
 Tool_MonteCarlo.py was used to generate the pseudodata.
