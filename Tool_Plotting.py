@@ -1,7 +1,7 @@
 #Roman Sultanov
 #Imports
-from AmpLambda import *
-#from AmpXi import *
+from PDFLambda import *
+#from PDFXi import *
 
 import csv
 with open(r'MCData.csv', 'r', encoding='utf-8') as csvFile:
