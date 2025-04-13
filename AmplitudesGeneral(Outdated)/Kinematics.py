@@ -53,7 +53,8 @@ def TwoBodyMomenta(mi, mf1, mf2):
     return np.sqrt(term1 * term2) / (2 * mi)
 
 @njit
-def FinalStateMomenta(m2_12, m2_23, m0, m1, m2, m3):
+def FinalStateMomenta(m2_12, m2_23, cosθ1, φ1, χ, m0, m1, m2, m3):
+    θ1 = np.arccos(cosθ1)
     m2_13 = m0*m0 + m1*m1 + m2*m2 + m3*m3 - m2_12 - m2_23
 
     #Magnitude of the momenta
@@ -70,41 +71,59 @@ def FinalStateMomenta(m2_12, m2_23, m0, m1, m2, m3):
     sinθ3 = np.sqrt(1 - cosθ3 * cosθ3)
 
     #Fix 4-momenta with p3 oriented in z (quantisation axis) direction
-    P1 = np.array([np.sqrt(p1_squared + m1 * m1), 0, 0, p1])
-    P2 = np.array([np.sqrt(p2 * p2 + m2 * m2), p2 * sinθ2, 0, -p2 * cosθ2])
-    P3 = np.array([np.sqrt(p3 * p3 + m3 * m3), -p3 * sinθ3, 0, -p3 * cosθ3])
+    P1_ = np.array([np.sqrt(p1_squared + m1 * m1), 0, 0, p1])
+    P2_ = np.array([np.sqrt(p2 * p2 + m2 * m2), p2 * sinθ2, 0, -p2 * cosθ2])
+    P3_ = np.array([np.sqrt(p3 * p3 + m3 * m3), -p3 * sinθ3, 0, -p3 * cosθ3])
 
     #Rotate 4-momenta to correct directions (Z-Y-Z convention)
-    return P1, P2, P3
+    return Rotation(φ1, θ1, χ, P1_), Rotation(φ1, θ1, χ, P2_), Rotation(φ1, θ1, χ, P3_)
 
 @njit
 def FinalStateAngles(P1, P2, P3): #P=[E, px, py, pz]
+    I = np.identity(4)
+
     #R resonance
     PR = P1 + P2
-    θR = np.arctan2(PR[1], PR[3])
+    φR = np.arctan2(PR[2], PR[1])
+    θR = np.arccos(PR[3] / np.linalg.norm(PR[1:]))
 
-    PR1 = Rotation(0, -θR, 0, Lorentz(betaCM(PR), P1)) #PR1 = L(PRz)R(0,-θR,-φR)P1 = R(0,-θR,-φR,)L(PR)P1
-    θR1 = np.arctan2(PR1[1], PR1[3])
+    BetaPR = betaCM(PR)
+    PR1 = Rotation(0, -θR, -φR, Lorentz(BetaPR, P1)) #PR1 = L(PRz)R(0,-θR,-φR)P1 = R(0,-θR,-φR,)L(PR)P1
+    φR1 = np.arctan2(PR1[2], PR1[1])
+    θR1 = np.arccos(PR1[3] / np.linalg.norm(PR1[1:]))
 
-    g1=1/np.sqrt(1-np.linalg.norm(betaCM(P1))**2)
-
-    gR=1/np.sqrt(1-np.linalg.norm(betaCM(PR))**2)
-    gR1=1/np.sqrt(1-np.linalg.norm(betaCM(PR1))**2)
-    aR=np.arccos((1+g1+gR+gR1)**2/((1+g1)*(1+gR)*(1+gR1))-1)
+    PR1c = Lorentz(BetaPR, P1)  #PR1p = R(φR,θR,0)PR1 = L(PR)P1
+    L1 = Lorentz(-betaCM(PR1c), I)
+    L2 = Lorentz(-BetaPR, L1)
+    RWig1 = Lorentz(betaCM(P1), L2)
+    αR1 = np.arctan2(RWig1[2,3], RWig1[1,3])
+    βR1 = np.arccos(RWig1[3,3])
+    γR1 = np.arctan2(RWig1[3,2], -RWig1[3,1])
 
     #S resonance
     PS = P1 + P3
-    θS = np.arctan2(PS[1], PS[3])
+    φS = np.arctan2(PS[2], PS[1])
+    θS = np.arccos(PS[3] / np.linalg.norm(PS[1:]))
 
-    PS1 = Rotation(0, -θS, 0, Lorentz(betaCM(PS), P1)) #PS1 = L(PSz)R(0,-θS,-φS)P1 = R(0,-θS,-φS,)L(PS)P1
-    θS1 = np.arctan2(PS1[1], PS1[3])
+    BetaPS = betaCM(PS)
+    PS1 = Rotation(0, -θS, -φS, Lorentz(BetaPS, P1)) #PS1 = L(PSz)R(0,-θS,-φS)P1 = R(0,-θS,-φS,)L(PS)P1
+    φS1 = np.arctan2(PS1[2], PS1[1])
+    θS1 = np.arccos(PS1[3] / np.linalg.norm(PS1[1:]))
 
-    gS=1/np.sqrt(1-np.linalg.norm(betaCM(PS))**2)
-    gS1=1/np.sqrt(1-np.linalg.norm(betaCM(PS1))**2)
-    aS=np.arccos((1+g1+gS+gS1)**2/((1+g1)*(1+gS)*(1+gS1))-1)
+    PS1c = Lorentz(BetaPS, P1)  #PS1p = R(φS,θS,0)PS1 = L(PS)P1
+    L1 = Lorentz(-betaCM(PS1c), I)
+    L2 = Lorentz(-BetaPS, L1)
+    SWig1 = Lorentz(betaCM(P1), L2)
+    αS1 = np.arctan2(SWig1[2,3], SWig1[1,3])
+    βS1 = np.arccos(SWig1[3,3])
+    γS1 = np.arctan2(SWig1[3,2], -SWig1[3,1])
 
     #U resonance
-    PbU2 = Lorentz(betaCM(P2+P3), P2) #PU2 = L(-PUz)R(0,-θ1,-φ1)P2 = R(0,-θU,-φU,)L(PU)P2
-    θbU2 = np.arctan2(PbU2[1], PbU2[3])
+    φ1 = np.arctan2(P1[2], P1[1])
+    θ1 = np.arccos(P1[3] / np.linalg.norm(P1[1:]))
 
-    return θR, θR1, aR, θS, θS1, aS, θbU2
+    PbU2 = Rotation(0, -θ1, -φ1, Lorentz(betaCM(P2+P3), P2)) #PU2 = L(-PUz)R(0,-θ1,-φ1)P2 = R(0,-θU,-φU,)L(PU)P2
+    φbU2 = np.arctan2(PbU2[2], PbU2[1])
+    θbU2 = np.arccos(PbU2[3] / np.linalg.norm(PbU2[1:]))
+
+    return φR, θR, φR1, θR1, αR1, βR1, γR1, φS, θS, φS1, θS1, αS1, βS1, γS1, φ1, θ1, φbU2, θbU2
