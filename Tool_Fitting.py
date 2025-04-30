@@ -8,7 +8,6 @@ HRpr, HRpi, HRmr, HRmi, HSpr, HSpi, HSmr, HSmi, HUpmr, HUpmi, HUmpr, HUmpi, HUm0
 
 from numba import set_num_threads
 set_num_threads(6)
-import pandas as pd
 
 #-----------------------------------------------------------------------------------------------------------------------
 import csv
